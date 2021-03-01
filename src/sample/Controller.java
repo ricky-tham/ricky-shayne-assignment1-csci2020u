@@ -22,6 +22,7 @@ public class Controller {
     @FXML private TextField accuracyVal;
     @FXML private TextField precisionVal;
 
+    // creating hashmaps for use in functions
     private HashMap<String,Double> hamFreq = new HashMap<String, Double>();
     private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
     private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
@@ -75,7 +76,20 @@ public class Controller {
                 hamFreq.put(entry.getKey(), result);
             }
         }
-
     }
 
+    // calls the frequency calculator methods
+    public void runProcess(File file){
+        if(file.isDirectory()){
+            if(file.getName().equals("ham")){
+                try{
+                    prWH(file);
+                }
+                catch(IOException error){
+                    error.printStackTrace();
+                }
+                System.out.println("Finished Ham Folder");
+            }
+        }
+    }
 }
