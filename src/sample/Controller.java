@@ -27,6 +27,7 @@ public class Controller {
     private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
     private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
 
+    // checks in word is valid
     private boolean isValidWord(String word){
         String condition = "^[a-zA-Z]*$";
         if (word.matches(condition))
@@ -40,7 +41,7 @@ public class Controller {
     // calculating the probability that the word W appears in a ham file. (Pr(W|H))
     public void prWH (File file) throws IOException {
         File[] files = file.listFiles();
-        System.out.println("Number of files: " + files.length);
+        System.out.println("Number of files ham: " + files.length);
 
         for (int i = 0; i < files.length; i++) {
             HashMap<String, Integer> temp = new HashMap<String, Integer>();
@@ -72,8 +73,49 @@ public class Controller {
             // calculates the frequency of word in ham file
             // puts it into a map
             for (Map.Entry<String,Integer> entry: hamWordCount.entrySet()){
-                double result = (double)entry.getValue() / (double)files.length;
-                hamFreq.put(entry.getKey(), result);
+                double resultHam = (double)entry.getValue() / (double)files.length;
+                hamFreq.put(entry.getKey(), resultHam);
+            }
+        }
+    }
+
+    // calculating the probability that the word W appears in a spam file. (Pr(W|S))
+    public void prWS (File file) throws IOException {
+        File[] files = file.listFiles();
+        System.out.println("Number of files spam: " + files.length);
+
+        for (int i = 0; i < files.length; i++) {
+            HashMap<String, Integer> temp = new HashMap<String, Integer>();
+
+            // put list of words in specific file to temporary map
+            Scanner scanner = new Scanner(files[i]);
+            while (scanner.hasNext()) {
+                String word = scanner.next();
+                if (isValidWord(word) && !temp.containsKey(word)) {
+                    temp.put(word, 1);
+                }
+            }
+
+            // iterate through temp hashmap and insert word list to a wordCount map
+            for (Map.Entry<String, Integer> entry : temp.entrySet()) {
+                // checks if hamWordCount contains the key
+                if (spamWordCount.containsKey(entry.getKey())) {
+                    // if word exists, adds to the word's count
+                    int prevCount = spamWordCount.get(entry.getKey());
+                    spamWordCount.put(entry.getKey(), prevCount + 1);
+                } else {
+                    // if word does not exist, add the word as a new entry
+                    spamWordCount.put(entry.getKey(), 1);
+                }
+            }
+
+            temp.clear();
+
+            // calculates the frequency of word in spam file
+            // puts it into a map
+            for (Map.Entry<String,Integer> entry: spamWordCount.entrySet()){
+                double resultSpam = (double)entry.getValue() / (double)files.length;
+                hamFreq.put(entry.getKey(), resultSpam);
             }
         }
     }
