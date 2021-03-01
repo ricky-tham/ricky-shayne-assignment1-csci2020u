@@ -10,9 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller {
     @FXML private TableView<TestFile> table;
@@ -23,11 +21,11 @@ public class Controller {
     @FXML private TextField precisionVal;
 
     // creating hashmaps for use in functions
-    private HashMap<String,Double> hamFreq = new HashMap<String, Double>();
-    private HashMap<String,Double> spamFreq = new HashMap<String, Double>();
-    private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
-    private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
-    private HashMap<String,Double> spamWord = new HashMap<String, Double>();
+    private TreeMap<String,Double> hamFreq = new TreeMap<String, Double>();
+    private TreeMap<String,Double> spamFreq = new TreeMap<String, Double>();
+    private TreeMap<String,Integer> hamWordCount = new TreeMap<String,Integer>();
+    private TreeMap<String,Integer> spamWordCount = new TreeMap<String,Integer>();
+    private TreeMap<String,Double> spamWord = new TreeMap<String, Double>();
 
     // checks in word is valid
     private boolean isValidWord(String word){
