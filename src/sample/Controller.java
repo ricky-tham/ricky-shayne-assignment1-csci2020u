@@ -49,7 +49,7 @@ public class Controller {
             Scanner scanner = new Scanner(files[i]);
             while (scanner.hasNext()) {
                 String word = scanner.next();
-                if (isWord(word) && !temp.containsKey(word)) {
+                if (isValidWord(word) && !temp.containsKey(word)) {
                     temp.put(word, 1);
                 }
             }
