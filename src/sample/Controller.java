@@ -27,7 +27,7 @@ public class Controller {
     private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
     private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
 
-    private boolean isWord(String word){
+    private boolean isValidWord(String word){
         String condition = "^[a-zA-Z]*$";
         if (word.matches(condition))
         {
