@@ -132,8 +132,8 @@ public class Controller {
         }
     }
 
-    // calls the frequency calculator methods
-    public void runProcess(File file){
+    // calls the frequency calculator methods for the training directory
+    public void runProcessTraining(File file){
         if(file.isDirectory()){
             if(file.getName().equals("ham")){
                 try{
@@ -143,6 +143,30 @@ public class Controller {
                     error.printStackTrace();
                 }
                 System.out.println("Finished Ham Folder");
+            }
+            else if(file.getName().equals("ham2")){
+                try{
+                    prWH(file);
+                }
+                catch(IOException error){
+                    error.printStackTrace();
+                }
+                System.out.println("Finished Ham Folder");
+            }
+            else if(file.getName().equals("spam")){
+                try{
+                    prWS(file);
+                }
+                catch(IOException error){
+                    error.printStackTrace();
+                }
+                System.out.println("Finished Ham Folder");
+            }
+            else{
+                File[] files = file.listFiles();
+                for(int i = 0; i < files.length; i++){
+                    runProcessTraining(files[i]);
+                }
             }
         }
     }
