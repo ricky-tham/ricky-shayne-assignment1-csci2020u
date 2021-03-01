@@ -19,13 +19,21 @@ public class Controller {
     @FXML private TableColumn<TestFile, Double> probability;
     @FXML private TextField accuracyVal;
     @FXML private TextField precisionVal;
+    @FXML private TextField trainDirectory;
+    @FXML private TextField testDirectory;
+    double numSpam = 0;
+    double numHamBad = 0;
+    double numHamGood = 0;
+    double numTestingFiles = 0.0;
+    double accuracy = 0.0;
+    double precision = 0.0;
 
     // creating hashmaps for use in functions
-    private TreeMap<String,Double> hamFreq = new TreeMap<String, Double>();
-    private TreeMap<String,Double> spamFreq = new TreeMap<String, Double>();
-    private TreeMap<String,Integer> hamWordCount = new TreeMap<String,Integer>();
-    private TreeMap<String,Integer> spamWordCount = new TreeMap<String,Integer>();
-    private TreeMap<String,Double> spamWord = new TreeMap<String, Double>();
+    private HashMap<String,Double> hamFreq = new HashMap<String, Double>();
+    private HashMap<String,Double> spamFreq = new HashMap<String, Double>();
+    private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
+    private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
+    private HashMap<String,Double> spamWord = new HashMap<String, Double>();
 
     // checks in word is valid
     private boolean isValidWord(String word){
@@ -130,6 +138,35 @@ public class Controller {
         }
     }
 
+    public double prSF(File file) throws FileNotFoundException{
+        double result = 0.0;
+        double threshold = 0.5;
+        double probSF = 0.0;
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            if (isValidWord(word) && !spamWord.containsKey(word)) {
+                result += Math.log((1-spamWord.get(word)) - Math.log(spamWord.get(word)));
+            }
+        }
+        probSF = 1 / (1 + Math.pow(Math.E, result));
+
+        // Accuracy and Precision
+        if (file.getParent().contains("ham") && probSF > threshold){
+            numHamGood = numHamGood + 1;
+            numTestingFiles = numTestingFiles + 1;
+        }
+        if (file.getParent().contains("ham") && probSF < threshold){
+            numHamBad = numHamBad + 1;
+            numTestingFiles = numTestingFiles + 1;
+        }
+        if (file.getParent().contains("spam") && probSF > threshold){
+            numSpam = numSpam + 1;
+            numTestingFiles = numTestingFiles + 1;
+        }
+        return probSF;
+    }
+
     // calls the frequency calculator methods for the training directory
     public void runProcessTraining(File file){
         if(file.isDirectory()){
@@ -166,6 +203,79 @@ public class Controller {
                     runProcessTraining(files[i]);
                 }
             }
+        }
+    }
+
+    // button action for train
+    public void trainAction(ActionEvent event){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("."));
+        File a = directoryChooser.showDialog(null);
+        if(a != null){
+            String path = a.getAbsolutePath();
+            trainDirectory.setText(path);
+            runProcessTraining(a);
+            prSW();
+        }
+        else{
+            System.out.println("Invalid Directory");
+        }
+    }
+
+    public void runProcessTesting(File file){
+        if (file.isDirectory()){
+            // goes through recursively if a directory of files
+            File[] files = file.listFiles();
+            for(int i = 0; i < files.length; i++){
+                runProcessTesting(files[i]);
+            }
+        }
+        else if(file.exists()){
+            double probResult = 0.0;
+            try{
+                probResult = prSF(file);
+            }
+            catch(IOException error){
+                error.printStackTrace();
+            }
+
+            // take probability of the test files and add to tableView
+            //had to change decimal formating to a string instead of double to make .format work
+            DecimalFormat decimalFormat = new DecimalFormat("0.00000");
+            if(file.getParent().contains("spam")){
+                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(probResult), "ham"));
+            }
+            else if(file.getParent().contains("ham")){
+                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(probResult), "spam"));
+            }
+        }
+    }
+
+    public void testAction(ActionEvent event){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File("."));
+        File a = directoryChooser.showDialog(null);
+        if(a != null){
+            String path = a.getAbsolutePath();
+            testDirectory.setText(path);
+            runProcessTesting(a);
+            System.out.println(numTestingFiles);
+            System.out.println("numSpam: " + numSpam);
+            System.out.println("numHamGood: " + numHamGood);
+            System.out.println("numHamBad: " + numHamBad);
+            // Calculating output for accuracy and precision
+            DecimalFormat decimalFormat = new DecimalFormat(("0.00000"));
+            accuracy = (numSpam + numHamGood) / numTestingFiles;
+            precision = numSpam / (numHamGood + numHamBad);
+            accuracyVal.setText(decimalFormat.format(accuracy));
+            precisionVal.setText(decimalFormat.format(precision));
+            // add all the values to the tableView
+            file.setCellValueFactory(new PropertyValueFactory<TestFile, String>("filename"));
+            realClass.setCellValueFactory(new PropertyValueFactory<TestFile, String>("actualClass"));
+            probability.setCellValueFactory(new PropertyValueFactory<TestFile, Double>("spamProbability"));
+        }
+        else{
+            System.out.println("Invalid Directory");
         }
     }
 }
