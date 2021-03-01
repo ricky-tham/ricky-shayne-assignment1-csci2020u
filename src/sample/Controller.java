@@ -24,8 +24,10 @@ public class Controller {
 
     // creating hashmaps for use in functions
     private HashMap<String,Double> hamFreq = new HashMap<String, Double>();
+    private HashMap<String,Double> spamFreq = new HashMap<String, Double>();
     private HashMap<String,Integer> hamWordCount = new HashMap<String,Integer>();
     private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
+    private HashMap<String,Double> spamWord = new HashMap<String, Double>();
 
     // checks in word is valid
     private boolean isValidWord(String word){
@@ -74,7 +76,7 @@ public class Controller {
             // puts it into a map
             for (Map.Entry<String,Integer> entry: hamWordCount.entrySet()){
                 double resultHam = (double)entry.getValue() / (double)files.length;
-                hamFreq.put(entry.getKey(), resultHam);
+                spamFreq.put(entry.getKey(), resultHam);
             }
         }
     }
@@ -116,6 +118,16 @@ public class Controller {
             for (Map.Entry<String,Integer> entry: spamWordCount.entrySet()){
                 double resultSpam = (double)entry.getValue() / (double)files.length;
                 hamFreq.put(entry.getKey(), resultSpam);
+            }
+        }
+    }
+
+    // calculating Pr(S|W)
+    public void prSW(){
+        for(Map.Entry<String, Double> entry: spamFreq.entrySet()){
+            if(hamFreq.containsKey(entry.getKey())){
+                double resultFinal = entry.getValue() / (entry.getValue() + hamFreq.get(entry.getKey()));
+                spamWord.put(entry.getKey(), resultFinal);
             }
         }
     }
