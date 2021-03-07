@@ -35,7 +35,11 @@ public class Controller {
     private HashMap<String,Integer> spamWordCount = new HashMap<String,Integer>();
     private HashMap<String,Double> spamWord = new HashMap<String, Double>();
 
-    // checks in word is valid
+    /*
+    * Checks if a word is valid based on a condition
+    * @param word   a word in one of the files
+    * @return       true or false based on condition
+    */
     private boolean isValidWord(String word){
         String condition = "^[a-zA-Z]*$";
         if (word.matches(condition))
@@ -46,7 +50,11 @@ public class Controller {
         }
     }
 
-    // calculating the probability that the word W appears in a ham file. (Pr(W|H))
+    /*
+     * Calculates the probability that the word W appears in a ham file (Pr(W|H))
+     * Uses a hashmap to store words and their counts
+     * @param file   a file within the selected directory
+     */
     public void prWH (File file) throws IOException {
         File[] files = file.listFiles();
         System.out.println("Number of files ham: " + files.length);
@@ -87,7 +95,11 @@ public class Controller {
         }
     }
 
-    // calculating the probability that the word W appears in a spam file. (Pr(W|S))
+    /*
+     * Calculates the probability that the word W appears in a spam file (Pr(W|S))
+     * Uses a hashmap to store words and their counts
+     * @param file   a file within the selected directory
+     */
     public void prWS (File file) throws IOException {
         File[] files = file.listFiles();
         System.out.println("Number of files spam: " + files.length);
@@ -128,7 +140,10 @@ public class Controller {
         }
     }
 
-    // calculating Pr(S|W)
+    /*
+     * Calculates the probability a word is spam (Pr(S|W))
+     * Uses a hashmap to store words and their counts
+     */
     public void prSW(){
         for(Map.Entry<String, Double> entry: spamFreq.entrySet()){
             if(hamFreq.containsKey(entry.getKey())){
@@ -138,6 +153,12 @@ public class Controller {
         }
     }
 
+    /*
+     * Calculates the final probability if the file is spam (Pr(S|F))
+     * Keeps count of the number of each type of file
+     * @param file   a file within the selected directory
+     * @return       the final probability of a file being spam
+     */
     public double prSF(File file) throws FileNotFoundException{
         double result = 0.0;
         double threshold = 0.5;
@@ -169,7 +190,10 @@ public class Controller {
         return probSF;
     }
 
-    // calls the frequency calculator methods for the training directory
+    /*
+     * Check what type of directory and calls the appropriate method to process the files
+     * @param file   a file within the selected directory
+     */
     public void runProcessTraining(File file){
         if(file.isDirectory()){
             if(file.getName().equals("ham")){
@@ -208,7 +232,11 @@ public class Controller {
         }
     }
 
-    // button action for train
+    /*
+     * Check what type of directory and calls the appropriate method to process the files
+     * Calls corresponding method for calculation of spam probability
+     * @param event   the action of pressing a button on the screen
+     */
     public void trainAction(ActionEvent event){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("."));
@@ -224,6 +252,11 @@ public class Controller {
         }
     }
 
+    /*
+     * Check what type of directory and calls the appropriate method to process the files
+     * Adds the probability value to the table
+     * @param file   a file within the selected directory or a directory itself
+     */
     public void runProcessTesting(File file){
         if (file.isDirectory()){
             // goes through recursively if a directory of files
@@ -252,6 +285,13 @@ public class Controller {
         }
     }
 
+    /*
+     * Check what type of directory and calls the appropriate method to process the files
+     * Calls corresponding method for calculation of spam probability
+     * Calculates the overall accuracy and precision and outputs them on the screen
+     * Fills each row of the chart with the proper data
+     * @param event   the action of pressing a button on the screen
+     */
     public void testAction(ActionEvent event){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("."));
