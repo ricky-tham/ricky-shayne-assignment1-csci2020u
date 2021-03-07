@@ -21,9 +21,9 @@ public class Controller {
     @FXML private TextField precisionVal;
     @FXML private TextField trainDirectory;
     @FXML private TextField testDirectory;
-    double numSpam = 0;
-    double numHamBad = 0;
-    double numHamGood = 0;
+    double truePositives = 0;
+    double trueNegative = 0;
+    double falsePositives = 0;
     double numTestingFiles = 0.0;
     double accuracy = 0.0;
     double precision = 0.0;
@@ -149,21 +149,21 @@ public class Controller {
                 result += Math.log( (1-spamWord.get(word) - Math.log(spamWord.get(word))));
             }
         }
-        System.out.println(result);
+        //System.out.println(result);
 
 
         probSF = 1 / (1 + Math.pow(Math.E, result));
-        System.out.println(probSF);
+        //System.out.println(probSF);
 
         // Accuracy and Precision
         if (file.getParent().contains("spam") && probSF > threshold){
-            numSpam += 1;
+            truePositives += 1;
         }
         if (file.getParent().contains("ham") && probSF > threshold){
-            numHamGood += 1;
+            falsePositives += 1;
         }
         if (file.getParent().contains("ham") && probSF < threshold){
-            numHamBad += 1;
+            trueNegative += 1;
         }
         numTestingFiles += 1;
         return probSF;
@@ -261,13 +261,13 @@ public class Controller {
             testDirectory.setText(path);
             runProcessTesting(a);
             System.out.println(numTestingFiles);
-            System.out.println("numSpam: " + numSpam);
-            System.out.println("numHamGood: " + numHamGood);
-            System.out.println("numHamBad: " + numHamBad);
+            System.out.println("truePositives: " + truePositives);
+            System.out.println("falsePositives: " + falsePositives);
+            System.out.println("trueNegative: " + trueNegative);
             // Calculating output for accuracy and precision
             DecimalFormat decimalFormat = new DecimalFormat(("0.00000"));
-            accuracy = (numSpam + numHamGood) / numTestingFiles;
-            precision = numSpam / (numHamGood + numHamBad);
+            accuracy = (truePositives + falsePositives) / numTestingFiles;
+            precision = truePositives / (falsePositives + trueNegative);
             accuracyVal.setText(decimalFormat.format(accuracy));
             precisionVal.setText(decimalFormat.format(precision));
             // add all the values to the tableView
