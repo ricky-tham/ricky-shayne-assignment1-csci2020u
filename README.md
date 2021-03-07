@@ -10,8 +10,8 @@ done.
 Insert Screenshot Here
 
 # Improvements
-Some improvements were made such as using a directory selector for
-choosing your train and test data. Other improvements include...
+Some improvements were made are thing such as using a directory selector
+for choosing your train and test data. Other improvements include...
 
 # How To Run
 To use this program yourself you must first open up your cmd or other
