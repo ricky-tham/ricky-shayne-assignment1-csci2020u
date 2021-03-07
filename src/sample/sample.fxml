@@ -12,11 +12,11 @@
 <GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller">
     <AnchorPane prefHeight="700" prefWidth="1000" styleClass="anchorPane">
 
-        <TableView fx:id="table" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <TableView fx:id="table" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="1000">
             <columns>
-                <TableColumn fx:id="file" text="File"></TableColumn>
-                <TableColumn fx:id="realClass" text="Actual Class"></TableColumn>
-                <TableColumn fx:id="probability" text="Spam Probability"></TableColumn>
+                <TableColumn fx:id="file" text="File" prefWidth="500"></TableColumn>
+                <TableColumn fx:id="realClass" text="Actual Class" prefWidth="250"></TableColumn>
+                <TableColumn fx:id="probability" text="Spam Probability" prefWidth="250"></TableColumn>
 
             </columns>
         </TableView>
