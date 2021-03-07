@@ -156,18 +156,16 @@ public class Controller {
         System.out.println(probSF);
 
         // Accuracy and Precision
+        if (file.getParent().contains("spam") && probSF > threshold){
+            numSpam += 1;
+        }
         if (file.getParent().contains("ham") && probSF > threshold){
-            numHamGood = numHamGood + 1;
-            numTestingFiles = numTestingFiles + 1;
+            numHamGood += 1;
         }
         if (file.getParent().contains("ham") && probSF < threshold){
-            numHamBad = numHamBad + 1;
-            numTestingFiles = numTestingFiles + 1;
+            numHamBad += 1;
         }
-        if (file.getParent().contains("spam") && probSF > threshold){
-            numSpam = numSpam + 1;
-            numTestingFiles = numTestingFiles + 1;
-        }
+        numTestingFiles += 1;
         return probSF;
     }
 
