@@ -1,6 +1,27 @@
 # rickytham-shaynelewis-spamdetector
 
-# Resources Used
+# Project Information
+This program takes files in a directory you select and does various 
+probability calculations to determine if it is spam (do not want) or 
+ham (want). It then outputs these files in a chart with their true 
+type and the probability of it being spam according to the calculations 
+done.
+
+Insert Screenshot Here
+
+#Improvements
+Some improvements were made such as using a directory selector for
+choosing your train and test data. Other improvements include...
+
+#How To Run
+To use this program yourself you must first open up your cmd or other
+similar program such as git bash and locate the folder you would like
+to clone to. Secondly, use the command git clone [url] using the url
+at the top of your browser in the place of the bracketed url. You can
+then open the project in any IDE and run it as long as Java and JavaFX
+are properly installed for your system.
+
+# Resources
 https://www.javatpoint.com/java-map 
 
 https://www.w3schools.com/java/java_user_input.asp
