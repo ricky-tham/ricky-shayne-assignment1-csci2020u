@@ -188,7 +188,7 @@ public class Controller {
                 catch(IOException error){
                     error.printStackTrace();
                 }
-                System.out.println("Finished Ham Folder");
+                System.out.println("Finished Ham2 Folder");
             }
             else if(file.getName().equals("spam")){
                 try{
@@ -197,7 +197,7 @@ public class Controller {
                 catch(IOException error){
                     error.printStackTrace();
                 }
-                System.out.println("Finished Ham Folder");
+                System.out.println("Finished Spam Folder");
             }
             else{
                 File[] files = file.listFiles();
