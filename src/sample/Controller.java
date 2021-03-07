@@ -141,12 +141,12 @@ public class Controller {
     public double prSF(File file) throws FileNotFoundException{
         double result = 0.0;
         double threshold = 0.5;
-        double probSF = 0.0;
+        double probSF;
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
             String word = scanner.next();
             if (isValidWord(word) && spamWord.containsKey(word)) {
-                result += Math.log((1-spamWord.get(word)) - Math.log(spamWord.get(word)));
+                result += Math.log( (1-spamWord.get(word) - Math.log(spamWord.get(word))));
             }
         }
         System.out.println(result);
