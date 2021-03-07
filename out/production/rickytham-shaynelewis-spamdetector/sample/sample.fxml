@@ -9,28 +9,27 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 
-<GridPane alignment="center" hgap="10" vgap="10" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller">
     <AnchorPane prefHeight="700" prefWidth="1000" styleClass="anchorPane">
-        <children>
-            <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <columns>
-                    <TableColumn fx:id="file" text="File"></TableColumn>
-                    <TableColumn fx:id="realClass" text="Actual Class"></TableColumn>
-                    <TableColumn fx:id="probability" text="Spam Probability"></TableColumn>
 
-                </columns>
-            </TableView>
+        <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <columns>
+                <TableColumn fx:id="file" text="File"></TableColumn>
+                <TableColumn fx:id="realClass" text="Actual Class"></TableColumn>
+                <TableColumn fx:id="probability" text="Spam Probability"></TableColumn>
 
-            <Label text="Accuracy:" GridPane.columnIndex="0" GridPane.rowIndex="1" layoutX="30.0" layoutY="620.0"/>
-            <Label text="Precision:" GridPane.columnIndex="0" GridPane.rowIndex="2" layoutX="30.0" layoutY="660.0"/>
-            <TextField fx:id="accuracyVal" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="100.0" layoutY="620.0"/>
-            <TextField fx:id="precisionVal" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="100.0" layoutY="660.0"/>
-            <Label text="Directory for Train:" GridPane.columnIndex="4" GridPane.rowIndex="1" layoutX="350.0" layoutY="620.0"/>
-            <Label text="Directory for Test:" GridPane.columnIndex="4" GridPane.rowIndex="2" layoutX="350.0" layoutY="660.0"/>
-            <Button fx:id="trainButton"  text="Choose" styleClass="button" onAction="#trainAction" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="470.0" layoutY="620.0"/>
-            <Button fx:id="testButton"  text="Choose" styleClass="button" onAction="#testAction" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="470.0" layoutY="660.0"/>
-            <TextField fx:id="trainDirectory" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="540.0" layoutY="620.0"/>
-            <TextField fx:id="testDirectory" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="540.0" layoutY="660.0"/>
-        </children>
+            </columns>
+        </TableView>
+
+        <Label text="Accuracy:" GridPane.columnIndex="0" GridPane.rowIndex="1" layoutX="30.0" layoutY="620.0"/>
+        <Label text="Precision:" GridPane.columnIndex="0" GridPane.rowIndex="2" layoutX="30.0" layoutY="660.0"/>
+        <TextField fx:id="accuracyVal" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="100.0" layoutY="620.0"/>
+        <TextField fx:id="precisionVal" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="100.0" layoutY="660.0"/>
+        <Label text="Directory for Train:" GridPane.columnIndex="4" GridPane.rowIndex="1" layoutX="350.0" layoutY="620.0"/>
+        <Label text="Directory for Test:" GridPane.columnIndex="4" GridPane.rowIndex="2" layoutX="350.0" layoutY="660.0"/>
+        <Button fx:id="trainButton"  text="Choose" styleClass="button" onAction="#trainAction" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="470.0" layoutY="620.0"/>
+        <Button fx:id="testButton"  text="Choose" styleClass="button" onAction="#testAction" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="470.0" layoutY="660.0"/>
+        <TextField fx:id="trainDirectory" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="540.0" layoutY="620.0"/>
+        <TextField fx:id="testDirectory" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="540.0" layoutY="660.0"/>
     </AnchorPane>
 </GridPane>

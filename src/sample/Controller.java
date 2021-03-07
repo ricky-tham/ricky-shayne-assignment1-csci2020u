@@ -82,7 +82,7 @@ public class Controller {
             // puts it into a map
             for (Map.Entry<String,Integer> entry: hamWordCount.entrySet()){
                 double resultHam = (double)entry.getValue() / (double)files.length;
-                spamFreq.put(entry.getKey(), resultHam);
+                hamFreq.put(entry.getKey(), resultHam);
             }
         }
     }
@@ -123,7 +123,7 @@ public class Controller {
             // puts it into a map
             for (Map.Entry<String,Integer> entry: spamWordCount.entrySet()){
                 double resultSpam = (double)entry.getValue() / (double)files.length;
-                hamFreq.put(entry.getKey(), resultSpam);
+                spamFreq.put(entry.getKey(), resultSpam);
             }
         }
     }
@@ -145,11 +145,15 @@ public class Controller {
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
             String word = scanner.next();
-            if (isValidWord(word) && !spamWord.containsKey(word)) {
+            if (isValidWord(word) && spamWord.containsKey(word)) {
                 result += Math.log((1-spamWord.get(word)) - Math.log(spamWord.get(word)));
             }
         }
+        System.out.println(result);
+
+
         probSF = 1 / (1 + Math.pow(Math.E, result));
+        System.out.println(probSF);
 
         // Accuracy and Precision
         if (file.getParent().contains("ham") && probSF > threshold){
@@ -231,22 +235,21 @@ public class Controller {
             }
         }
         else if(file.exists()){
-            double probResult = 0.0;
+            double spamProbability = 0.0;
             try{
-                probResult = prSF(file);
+                spamProbability = prSF(file);
             }
             catch(IOException error){
                 error.printStackTrace();
             }
-
             // take probability of the test files and add to tableView
-            //had to change decimal formating to a string instead of double to make .format work
+            //had to change decimal formatting to a string instead of double to make .format work
             DecimalFormat decimalFormat = new DecimalFormat("0.00000");
-            if(file.getParent().contains("spam")){
-                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(probResult), "ham"));
+            if(file.getParent().contains("ham")){
+                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(spamProbability), "ham"));
             }
-            else if(file.getParent().contains("ham")){
-                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(probResult), "spam"));
+            else{
+                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(spamProbability), "spam"));
             }
         }
     }
