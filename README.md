@@ -9,11 +9,11 @@ done.
 
 Insert Screenshot Here
 
-#Improvements
+# Improvements
 Some improvements were made such as using a directory selector for
 choosing your train and test data. Other improvements include...
 
-#How To Run
+# How To Run
 To use this program yourself you must first open up your cmd or other
 similar program such as git bash and locate the folder you would like
 to clone to. Secondly, use the command git clone [url] using the url
