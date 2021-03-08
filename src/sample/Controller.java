@@ -39,8 +39,8 @@ public class Controller {
     double precision = 0.0;
 
     // creating treemaps for use in functions
-    private TreeMap<String, Double> hamFreq = new TreeMap<String, Double>();
-    private TreeMap<String, Double> spamFreq = new TreeMap<String, Double>();
+    private TreeMap<String, Double> trainHamFreq = new TreeMap<String, Double>();
+    private TreeMap<String, Double> trainSpamFreq = new TreeMap<String, Double>();
     private TreeMap<String, Integer> hamWordCount = new TreeMap<String, Integer>();
     private TreeMap<String, Integer> spamWordCount = new TreeMap<String, Integer>();
     private TreeMap<String, Double> spamWord = new TreeMap<String, Double>();
@@ -99,7 +99,7 @@ public class Controller {
             // puts it into a map
             for (Map.Entry<String, Integer> entry : hamWordCount.entrySet()) {
                 double resultHam = (double) entry.getValue() / (double) files.length;
-                hamFreq.put(entry.getKey(), resultHam);
+                trainHamFreq.put(entry.getKey(), resultHam);
             }
         }
     }
@@ -145,7 +145,7 @@ public class Controller {
             // puts it into a map
             for (Map.Entry<String, Integer> entry : spamWordCount.entrySet()) {
                 double resultSpam = (double) entry.getValue() / (double) files.length;
-                spamFreq.put(entry.getKey(), resultSpam);
+                trainSpamFreq.put(entry.getKey(), resultSpam);
             }
         }
     }
@@ -155,9 +155,9 @@ public class Controller {
      * Uses a treemap to store words and their counts
      */
     public void prSW() {
-        for (Map.Entry<String, Double> entry : spamFreq.entrySet()) {
-            if (hamFreq.containsKey(entry.getKey())) {
-                double resultFinal = entry.getValue() / (entry.getValue() + hamFreq.get(entry.getKey()));
+        for (Map.Entry<String, Double> entry : trainSpamFreq.entrySet()) {
+            if (trainHamFreq.containsKey(entry.getKey())) {
+                double resultFinal = entry.getValue() / (entry.getValue() + trainHamFreq.get(entry.getKey()));
                 spamWord.put(entry.getKey(), resultFinal);
             }
         }
@@ -170,21 +170,18 @@ public class Controller {
      * @return       the final probability of a file being spam
      */
     public double prSF(File file) throws FileNotFoundException {
-        double result = 0.0;
+        double n = 0.0;
         double threshold = 0.5;
         double probSF;
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
             String word = scanner.next();
             if (isValidWord(word) && spamWord.containsKey(word)) {
-                result += Math.log((1 - spamWord.get(word) - Math.log(spamWord.get(word))));
+                n += Math.log((1 - spamWord.get(word) - Math.log(spamWord.get(word))));
             }
         }
-        //System.out.println(result);
-
-
-        probSF = 1 / (1 + Math.pow(Math.E, result));
-        //System.out.println(probSF);
+        probSF = 1 / (1 + Math.pow(Math.E, n));
+        System.out.println(file + " " + probSF);
 
         // Accuracy and Precision
         if (file.getParent().contains("spam") && probSF > threshold) {
@@ -244,11 +241,11 @@ public class Controller {
     public void trainAction(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("."));
-        File a = directoryChooser.showDialog(null);
-        if (a != null) {
-            String path = a.getAbsolutePath();
+        File mainDirectory = directoryChooser.showDialog(null);
+        if (mainDirectory != null) {
+            String path = mainDirectory.getAbsolutePath();
             trainDirectory.setText(path);
-            runProcessTraining(a);
+            runProcessTraining(mainDirectory);
             prSW();
         } else {
             System.out.println("Invalid Directory");
@@ -295,11 +292,11 @@ public class Controller {
     public void testAction(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("."));
-        File a = directoryChooser.showDialog(null);
-        if (a != null) {
-            String path = a.getAbsolutePath();
+        File mainDirectory = directoryChooser.showDialog(null);
+        if (mainDirectory != null) {
+            String path = mainDirectory.getAbsolutePath();
             testDirectory.setText(path);
-            runProcessTesting(a);
+            runProcessTesting(mainDirectory);
             System.out.println(numTestingFiles);
             System.out.println("truePositives: " + truePositives);
             System.out.println("falsePositives: " + falsePositives);
