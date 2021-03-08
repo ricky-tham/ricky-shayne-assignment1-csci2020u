@@ -303,8 +303,8 @@ public class Controller {
             System.out.println("trueNegative: " + trueNegative);
             // Calculating output for accuracy and precision
             DecimalFormat decimalFormat = new DecimalFormat(("0.00000"));
-            accuracy = (truePositives + falsePositives) / numTestingFiles;
-            precision = truePositives / (falsePositives + trueNegative);
+            accuracy = (truePositives + trueNegative) / numTestingFiles;
+            precision = truePositives / (falsePositives + truePositives);
             accuracyVal.setText(decimalFormat.format(accuracy));
             precisionVal.setText(decimalFormat.format(precision));
             // add all the values to the table
