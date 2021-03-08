@@ -38,7 +38,7 @@ public class Controller {
     double accuracy = 0.0;
     double precision = 0.0;
 
-    // creating treemaps for use in functions
+    // creating TreeMaps for use in functions
     private TreeMap<String, Double> trainHamFreq = new TreeMap<String, Double>();
     private TreeMap<String, Double> trainSpamFreq = new TreeMap<String, Double>();
     private TreeMap<String, Integer> hamWordCount = new TreeMap<String, Integer>();
