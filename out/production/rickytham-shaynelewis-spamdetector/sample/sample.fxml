@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import java.net.URL?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller">
     <AnchorPane prefHeight="700" prefWidth="1000" styleClass="anchorPane">
@@ -32,4 +33,7 @@
         <TextField fx:id="trainDirectory" GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="540.0" layoutY="620.0"/>
         <TextField fx:id="testDirectory" GridPane.columnIndex="1" GridPane.rowIndex="2" layoutX="540.0" layoutY="660.0"/>
     </AnchorPane>
+    <stylesheets>
+        <URL value="@Colours.css"/>
+    </stylesheets>
 </GridPane>

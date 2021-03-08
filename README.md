@@ -11,7 +11,10 @@ Insert Screenshot Here
 
 # Improvements
 Some improvements were made are thing such as using a directory selector
-for choosing your train and test data. Other improvements include...
+for choosing your train and test data by using file explorer. Other improvements include 
+changing the design of the system to be light and dark blue, as well as
+changing fonts to be bolded. The table also has every cell coloured in
+the same blue design
 
 # How To Run
 To use this program yourself you must first open up your cmd or other
@@ -31,3 +34,5 @@ https://examples.javacodegeeks.com/java-io-ioexception/
 http://tutorials.jenkov.com/javafx/directorychooser.html
 
 https://www.baeldung.com/java-round-decimal-number
+
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html

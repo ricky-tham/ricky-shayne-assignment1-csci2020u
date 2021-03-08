@@ -1,0 +1,26 @@
+.anchorPane{
+    -fx-background-color: steelblue;
+}
+.gridPane{
+    -fx-background-color: lightsteelblue;
+}
+.label{
+    -fx-font-weight: bold;
+}
+.table-view{
+    -fx-background-color: #b0c4de;
+}
+.table-view .column-header-background{
+    -fx-background-color: #4682b4;
+}
+.table-view .column-header{
+    -fx-background-color: transparent;
+}
+.table-row-cell{
+    -fx-background-color: #b0c4de;
+    -fx-table-cell-border-color: #4682b4;
+}
+.button{
+    -fx-background-color: #b0c4de;
+    -fx-font-weight: bold;
+}
