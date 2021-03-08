@@ -211,13 +211,13 @@ public class Controller {
                     error.printStackTrace();
                 }
                 System.out.println("Finished Ham Folder");
-//            } else if (file.getName().equals("ham2")) {
-//                try {
-//                    prWH(file);
-//                } catch (IOException error) {
-//                    error.printStackTrace();
-//                }
-//                System.out.println("Finished Ham2 Folder");
+/*          } else if (file.getName().equals("ham2")) {
+                try {
+                    prWH(file);
+                } catch (IOException error) {
+                    error.printStackTrace();
+                }
+                System.out.println("Finished Ham2 Folder");*/
             } else if (file.getName().equals("spam")) {
                 try {
                     prWS(file);
