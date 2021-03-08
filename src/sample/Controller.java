@@ -180,8 +180,9 @@ public class Controller {
                 n += Math.log((1 - spamWord.get(word) - Math.log(spamWord.get(word))));
             }
         }
+        //System.out.println(n);
         probSF = 1 / (1 + Math.pow(Math.E, n));
-        System.out.println(file + " " + probSF);
+        //System.out.println(file + " " + probSF);
 
         // Accuracy and Precision
         if (file.getParent().contains("spam") && probSF > threshold) {
@@ -210,13 +211,13 @@ public class Controller {
                     error.printStackTrace();
                 }
                 System.out.println("Finished Ham Folder");
-            } else if (file.getName().equals("ham2")) {
-                try {
-                    prWH(file);
-                } catch (IOException error) {
-                    error.printStackTrace();
-                }
-                System.out.println("Finished Ham2 Folder");
+//            } else if (file.getName().equals("ham2")) {
+//                try {
+//                    prWH(file);
+//                } catch (IOException error) {
+//                    error.printStackTrace();
+//                }
+//                System.out.println("Finished Ham2 Folder");
             } else if (file.getName().equals("spam")) {
                 try {
                     prWS(file);
@@ -262,6 +263,7 @@ public class Controller {
             // goes through recursively if a directory of files
             File[] files = file.listFiles();
             for (int i = 0; i < files.length; i++) {
+                //System.out.println(file);
                 runProcessTesting(files[i]);
             }
         } else if (file.exists()) {
@@ -274,10 +276,12 @@ public class Controller {
             // take probability of the test files and add to tableView
             //had to change decimal formatting to a string instead of double to make .format work
             DecimalFormat decimalFormat = new DecimalFormat("0.00000");
-            if (file.getParent().contains("ham")) {
-                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(spamProbability), "ham"));
-            } else {
+            String parent = file.getParent();
+            System.out.println(parent);
+            if (parent.contains("spam")) {
                 table.getItems().add(new TestFile(file.getName(), decimalFormat.format(spamProbability), "spam"));
+            } else {
+                table.getItems().add(new TestFile(file.getName(), decimalFormat.format(spamProbability), "ham"));
             }
         }
     }
